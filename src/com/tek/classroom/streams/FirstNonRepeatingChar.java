@@ -1,20 +1,24 @@
-package com.tek.techwave;
+package com.tek.classroom.streams;
 
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class FirstNonRepeatingChar {
     public static void main(String[] args) {
-        String str="Swiss".toLowerCase();
-        Character c1 = str.chars()
+        Scanner scn=new Scanner(System.in);
+        System.out.println("Enter the String:");
+        String input=scn.next();
+        char result= input.chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.groupingBy(c -> c, Collectors.counting()))
                 .entrySet()
                 .stream()
                 .filter(e -> e.getValue() == 1)
-                .findFirst()
                 .map(Map.Entry::getKey)
-                .orElse(null);
-        System.out.println(c1);
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No second non-repeating character found"));
+
+        System.out.println(result);
     }
 }
